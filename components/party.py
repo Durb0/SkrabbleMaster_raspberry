@@ -1,17 +1,17 @@
-from .core import Component
+from core.component import Component
 from .validation import ValidationComponent, Choice
+from service.componentservice import ComponentService
 
+from service.board import Board
+from core import inject
+
+@inject('_board',Board)
+@inject('_routing', ComponentService)
 class PartyComponent(Component):
 
-    def show(self):
-        pass #TODO
-
-    def __init__(self):
-        super().__init__()
-
-    def onSetContext(self):
+    def onInit(self):
         print('mode party')
-        light = self.context.board.mode_button.setLight(True)
+        light = self._board.mode_button.setLight(True)
         assert light
 
     def handleActionButtonOnPress(self, duration):
@@ -23,14 +23,14 @@ class PartyComponent(Component):
             text = "PAQUETA"
             print("[TODO] Show text on screen")
             print("[TODO] Wait for user to validate text")
-            self._context.set_component(
+            self._routing.setComponent(
                 ValidationComponent('Do you valid the text?', text,
-                                Choice('Yes', lambda : self.handleChoose('yes')),
-                                Choice('No', lambda : self.handleChoose('no'))
+                            Choice('Yes', lambda : self.handleChoose('yes')),
+                            Choice('No', lambda : self.handleChoose('no'))
                 )
             )
 
     def handleChoose(self, choice):
         if choice == "yes":
             print('[TODO] Add turn')
-        self._context.set_component(PartyComponent())
+        self._routing.setComponent(PartyComponent())

@@ -1,4 +1,4 @@
-from .core import Component
+from core.component import Component
 
 class Choice:
 
@@ -9,12 +9,11 @@ class Choice:
 class ValidationComponent(Component):
 
     def __init__(self, title, message, short_choice: Choice, long_choice: Choice):
-        super().__init__()
         self.title = title
         self.message = message
         self.short_choice = short_choice
         self.long_choice = long_choice
-
+        super().__init__()
 
     def handleActionButtonOnPress(self, e):
         if e >= 2:

@@ -1,9 +1,4 @@
-import PySignal as signal
-import keyboard
-import time
-from functools import wraps
-
-from .button import Button
+from object.button.button import Button
 
 class LightButton(Button):
 
@@ -11,7 +6,7 @@ class LightButton(Button):
         super().__init__(logic)
         self.light_status = light_status
 
-    def switch_light(self):
+    def switchLight(self):
         self.light_status = not self.light_status
         return self.light_status
 
@@ -26,7 +21,7 @@ class LightButton(Button):
 if __name__ == '__main__':
 
     def testHandlePress(button):
-        button.switch_light()
+        button.switchLight()
         print("light on" if button.isLight() else "light off")
 
     from object.button.buttonLogic import KeyBoardButtonLogic

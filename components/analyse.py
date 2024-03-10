@@ -1,17 +1,15 @@
-from .core import Component
+from core.component import Component
+from service.board import Board
 
+from core import inject
+
+@inject('_board',Board)
 class AnalyseComponent(Component):
 
-    def __init__(self):
-        super().__init__()
-
-    def onSetContext(self):
+    def onInit(self):
         print('mode analyse')
-        light = self.context.board.mode_button.setLight(False)
+        light = self._board.mode_button.setLight(False)
         assert not light
 
     def handleActionButtonOnPress(self, e):
         print('[A] action button pressed')
-
-    def show(self):
-        pass #TODO

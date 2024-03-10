@@ -1,6 +1,8 @@
 from object.button import Button, LightButton
 from object.button.buttonLogic import KeyBoardButtonLogic
+from core import Service
 
+@Service
 class Board:
 
     def __init__(self):

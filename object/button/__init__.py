@@ -1,2 +1,2 @@
 from .button import Button
-from .lightButton import LightButton
+from object.button.lightButton import LightButton
