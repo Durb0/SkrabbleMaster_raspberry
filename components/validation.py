@@ -24,5 +24,5 @@ class ValidationComponent(Component):
     def show(self): #TODO à adapter selon le periphérique d'affichage
         print(self.title)
         print(self.message)
-        print('1:', self.short_choice.label)
-        print('2:', self.long_choice.label)
+        print('short:', self.short_choice.label)
+        print('long:', self.long_choice.label)
