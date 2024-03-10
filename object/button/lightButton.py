@@ -29,7 +29,7 @@ if __name__ == '__main__':
         button.switch_light()
         print("light on" if button.isLight() else "light off")
 
-    from components.button.buttonLogic import KeyBoardButtonLogic
+    from object.button.buttonLogic import KeyBoardButtonLogic
     button = LightButton(KeyBoardButtonLogic())
     button.on_press.connect(lambda e: testHandlePress(button))
     input('Press enter to exit')

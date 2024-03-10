@@ -31,7 +31,7 @@ class Button:
 
 
 if __name__ == '__main__':
-    from components.button.buttonLogic import KeyBoardButtonLogic
+    from object.button.buttonLogic import KeyBoardButtonLogic
     button = Button(KeyBoardButtonLogic())
     button.on_press.connect(lambda e: print('Button pressed for', e, 'seconds'))
     button.in_press.connect(lambda e: print('Button is pressed for', e, 'seconds'))

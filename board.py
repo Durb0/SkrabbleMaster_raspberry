@@ -1,5 +1,5 @@
-from components.button import Button, LightButton
-from components.button.buttonLogic import KeyBoardButtonLogic
+from object.button import Button, LightButton
+from object.button.buttonLogic import KeyBoardButtonLogic
 
 class Board:
 
