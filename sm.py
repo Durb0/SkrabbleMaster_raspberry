@@ -1,16 +1,25 @@
 from board import Board
 from enum import Enum
 from mode import ModeAnalyse, ModeParty, Mode, ModeType
+from turn import Turn
+from typing import List
+import keyboard
 
 class SkrabbleMaster:
 
     def __init__(self, mode:Mode = ModeAnalyse()):
-        self.turns = []#TODO Créer la classe Turn
-        self.board = Board()
+        self.mode = None
+        self.turns:List[Turn] = []
+        self.board:Board = Board()
+        
         self.board.mode_button.on_press.connect(self.handleModeButton)
         self.set_mode(mode)
 
+        keyboard.on_press_key('l', lambda e: print(self.board.mode_button.isLight())) #TEMP à supprimer lorsqu'on aura un bouton lumineux fonctionnel
+
     def set_mode(self, mode:Mode):
+        if self.mode:
+            self.mode.clearEvents()
         self.mode = mode
         self.mode.context = self
 
