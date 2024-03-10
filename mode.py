@@ -19,7 +19,6 @@ class Mode(ABC):
     def __init__(self, mode:ModeType):
         self._context = None
         self.mode = mode
-        self._events: List[Subscription] = []
 
     @property
     def context(self):
@@ -29,19 +28,10 @@ class Mode(ABC):
     def context(self, context):
         self._context = context
         self.onSetContext()
-        self.initEvents()
 
     @abstractmethod
     def onSetContext(self):
         pass
-
-    def initEvents(self):
-        # action button
-        self._events.append(Subscription(self.context.board.action_button.on_press, self.handleActionButtonOnPress))
-
-    def clearEvents(self):
-        [e.disconnect() for e in self._events]
-        self._events = []
 
     def handleActionButtonOnPress(self, e):
         pass
