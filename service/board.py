@@ -8,7 +8,6 @@ class Board:
     def __init__(self):
         self.mode_button = LightButton(KeyBoardButtonLogic('m'))
         self.action_button = Button(KeyBoardButtonLogic('a'))
-        self.lorawan = None #TODO créer la classe LoRaWan
         self.camera = None #TODO créer la classe Camera
         self.screen = None #TODO créer la classe Screen
 

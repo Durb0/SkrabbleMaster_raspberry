@@ -21,6 +21,7 @@ class PartyComponent(Component):
     def handleActionButtonOnPress(self, duration):
         if duration >= 2:
             self._turn.removeLastTurn()
+            self.change.emit()
         else:
             print('[TODO] Take a photo')
             print("[TODO] Analyse photo to get text")
