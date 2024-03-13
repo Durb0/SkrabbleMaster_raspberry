@@ -1,4 +1,5 @@
 from core.component import Component
+from config import LONG_PRESS_TIME
 
 class Choice:
 
@@ -33,7 +34,7 @@ class ValidationComponent(Component):
         ]
 
     def handleActionButtonOnPress(self, e):
-        if e >= 2:
+        if e >= LONG_PRESS_TIME:
             self.long_choice.action()
         else:
             self.short_choice.action()

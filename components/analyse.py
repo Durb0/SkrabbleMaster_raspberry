@@ -3,6 +3,7 @@ from service.turn import TurnService
 
 from core.inject import inject
 from components.utils import header
+from config import LONG_PRESS_TIME
 
 @inject('_turn', TurnService)
 class AnalyseComponent(Component):
@@ -27,7 +28,7 @@ class AnalyseComponent(Component):
         return self.turns[self.index]
 
     def handleActionButtonOnPress(self, e):
-        if e >= 2:
+        if e >= LONG_PRESS_TIME:
             self.index = (self.index - 1) % len(self.turns)
         else:
             self.index = (self.index + 1) % len(self.turns)

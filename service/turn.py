@@ -18,7 +18,6 @@ class TurnService:
 
     def cleanCache(self):
         self._turns = []
-        self._routing.reload()
         print('cache cleaned')
 
     def removeLastTurn(self):

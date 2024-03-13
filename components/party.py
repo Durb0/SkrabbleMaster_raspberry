@@ -7,6 +7,7 @@ from core.inject import inject
 from models.turn import Turn
 from components.utils import header
 import random
+from config import LONG_PRESS_TIME
 
 @inject('_routing', ComponentService)
 @inject('_turn', TurnService)
@@ -38,7 +39,7 @@ class PartyComponent(Component):
         return word
 
     def handleActionButtonOnPress(self, duration):
-        if duration >= 2:
+        if duration >= LONG_PRESS_TIME:
             self._turn.removeLastTurn()
             self.change.emit()
         else:

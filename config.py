@@ -1,0 +1,1 @@
+LONG_PRESS_TIME = 1

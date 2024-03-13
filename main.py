@@ -1,9 +1,11 @@
 import keyboard
-from components import AnalyseComponent, PartyComponent
+from components import AnalyseComponent, PartyComponent, ValidationComponent
+from components.validation import Choice
 from service.componentservice import ComponentService
 from service.turn import TurnService
 from service.board import Board
 from core.inject import inject
+from config import LONG_PRESS_TIME
 
 @inject('_board', Board)
 @inject('_routing', ComponentService)
@@ -17,8 +19,13 @@ class SkrabbleMaster:
 
 
     def handleModeButtonOnPress(self, e):
-        if e >= 2:
-            self._turns.cleanCache()
+        if e >= LONG_PRESS_TIME:
+            self._routing.setComponent(
+                ValidationComponent('Do you want to clean the cache?', '',
+                                    Choice('Yes', lambda : self.clean(True)),
+                                    Choice('No', lambda : self.clean(False))
+                )
+            )
         else:
             if isinstance(self._routing.getComponent(), AnalyseComponent):
                 self._routing.setComponent(PartyComponent())
@@ -26,6 +33,12 @@ class SkrabbleMaster:
             else:
                 self._routing.setComponent(AnalyseComponent())
                 self._board.mode_button.setLight(False)
+
+    def clean(self, choice):
+        if choice:
+            self._turns.cleanCache()
+        self._routing.setComponent(PartyComponent())
+
 
 
 
