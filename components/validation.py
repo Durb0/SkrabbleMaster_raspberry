@@ -15,14 +15,25 @@ class ValidationComponent(Component):
         self.long_choice = long_choice
         super().__init__()
 
+    def setTemplate(self):
+        screen_mid_width = 120
+        screen_mid_height = 160
+        width = 200
+        height = 160
+        cursor = [
+            screen_mid_width - width/2,
+            screen_mid_height - height/2
+        ]
+        return [
+            "rectangle_fill?color=0xFFFF;x_start={};y_start={};x_end={};y_end={};".format(cursor[0], cursor[1], width, height),
+            "text?value={};color=0x0000;size=1;x_start={};y_start={};".format(self.title, cursor[0] + 10, cursor[1] + 10),
+            "text?value={};color=0x0000;size=3;x_start={};y_start={};".format(self.message, cursor[0] + 10, cursor[1] + 30),
+            "text?value={};color=0x0000;size=2;x_start={};y_start={};".format(self.short_choice.label, cursor[0] + 10, cursor[1] + 100),
+            "text?value={};color=0x0000;size=2;x_start={};y_start={};".format(self.long_choice.label, cursor[0] + 10, cursor[1] + 130),
+        ]
+
     def handleActionButtonOnPress(self, e):
         if e >= 2:
             self.long_choice.action()
         else:
             self.short_choice.action()
-
-    def show(self): #TODO à adapter selon le periphérique d'affichage
-        print(self.title)
-        print(self.message)
-        print('short:', self.short_choice.label)
-        print('long:', self.long_choice.label)

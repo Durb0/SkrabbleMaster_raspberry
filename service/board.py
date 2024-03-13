@@ -1,6 +1,7 @@
 from object.button import Button, LightButton
 from object.button.buttonLogic import KeyBoardButtonLogic
-from core import Service
+from object.screen import Screen
+from core.service import Service
 
 @Service
 class Board:
@@ -9,7 +10,7 @@ class Board:
         self.mode_button = LightButton(KeyBoardButtonLogic('m'))
         self.action_button = Button(KeyBoardButtonLogic('a'))
         self.camera = None #TODO créer la classe Camera
-        self.screen = None #TODO créer la classe Screen
+        self.screen = Screen(240, 320)
 
 
 if __name__ == '__main__':

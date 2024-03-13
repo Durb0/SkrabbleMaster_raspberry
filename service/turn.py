@@ -1,8 +1,11 @@
-from core import Service
+from core.service import Service
 from models.turn import Turn
 from .board import Board
+from core.inject import inject
+from .componentservice import ComponentService
 
 @Service
+@inject('_routing', ComponentService)
 class TurnService:
     def __init__(self):
         self._turns:List[Turn] = []
@@ -15,6 +18,7 @@ class TurnService:
 
     def cleanCache(self):
         self._turns = []
+        self._routing.reload()
         print('cache cleaned')
 
     def removeLastTurn(self):

@@ -1,8 +1,9 @@
-from core import Service, Component
 from PySignal import Signal
 
 from .board import Board
-from core import inject, Service
+from core.inject import inject
+from core.service import Service
+from core.component import Component
 
 @Service
 @inject('_board',Board)
@@ -28,3 +29,7 @@ class ComponentService:
 
     def getComponent(self):
         return self._component
+
+    def reload(self):
+        self._component.show()
+        self.component_changed.emit()
