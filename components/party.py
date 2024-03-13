@@ -1,6 +1,8 @@
 from core.component import Component
 from .validation import ValidationComponent, Choice
-from service import ComponentService, Board, TurnService
+from service.componentservice import ComponentService
+from service.board import Board
+from service.turn import TurnService
 from core.inject import inject
 from models.turn import Turn
 from components.utils import header

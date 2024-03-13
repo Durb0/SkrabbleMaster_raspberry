@@ -1,5 +1,5 @@
 from core.component import Component
-from service import TurnService
+from service.turn import TurnService
 
 from core.inject import inject
 from components.utils import header

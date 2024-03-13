@@ -11,6 +11,6 @@ class Board:
 
     def __init__(self):
         self.screen = Screen(240, 320)
-        self.mode_button = LightButton(RaspberryButtonLogic(6), KeyBoardLightLogic(5))
+        self.mode_button = LightButton(RaspberryButtonLogic(6), RaspberryLightLogic(5))
         self.action_button = Button(RaspberryButtonLogic(16, False))
         self.camera = None  # TODO créer la classe Camera
