@@ -11,7 +11,6 @@ class ButtonLogic(ABC):
         pass
 
 
-
 class KeyBoardButtonLogic(ButtonLogic):
 
     def __init__(self, key = 'k'):
@@ -23,17 +22,9 @@ class KeyBoardButtonLogic(ButtonLogic):
 
 
 class RaspberryButtonLogic(ButtonLogic):
-    def __init__(self, pin, pull_up=True, threshold=1):
+    def __init__(self, pin, pull_up=True):
         self._button = Button(pin, pull_up=pull_up)
-        self._threshold = threshold
 
     def initEvents(self, on_press_method, on_release_method):
-        self._button.wait_for_press()
-        begin = time.time()
-        self._button.wait_for_release()
-        press_duration = time.time() - begin
-
-        if press_duration < self._threshold:
-            on_press_method()
-        else:
-            on_release_method()
+        self._button.when_pressed = on_press_method
+        self._button.when_released = on_release_method
