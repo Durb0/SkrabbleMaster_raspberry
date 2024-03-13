@@ -1,2 +1,3 @@
 keyboard==0.13.5
 PySignal==1.1.1
+gpiozero==2.0.1

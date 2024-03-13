@@ -1,9 +1,5 @@
-from service.board import Board
-from enum import Enum
-from models.turn import Turn
-from typing import List
 import keyboard
-from components import Component, AnalyseComponent, PartyComponent, ValidationComponent
+from components import AnalyseComponent, PartyComponent
 from service import ComponentService, TurnService, Board
 from core.inject import inject
 
@@ -15,7 +11,7 @@ class SkrabbleMaster:
     def __init__(self):
         self._routing.setComponent(PartyComponent())
         self._board.mode_button.on_press.connect(self.handleModeButtonOnPress)
-        keyboard.on_press_key('l', lambda e: print(self._board.mode_button.isLight())) #TEMP à supprimer lorsqu'on aura un bouton lumineux fonctionnel
+        # keyboard.on_press_key('l', lambda e: print(self._board.mode_button.isLight())) #TEMP à supprimer lorsqu'on aura un bouton lumineux fonctionnel
 
 
     def handleModeButtonOnPress(self, e):
@@ -24,8 +20,10 @@ class SkrabbleMaster:
         else:
             if isinstance(self._routing.getComponent(), AnalyseComponent):
                 self._routing.setComponent(PartyComponent())
+                self._board.mode_button.setLight(True)
             else:
                 self._routing.setComponent(AnalyseComponent())
+                self._board.mode_button.setLight(False)
 
 
 
