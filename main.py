@@ -1,6 +1,8 @@
 import keyboard
 from components import AnalyseComponent, PartyComponent
-from service import ComponentService, TurnService, Board
+from service.componentservice import ComponentService
+from service.turn import TurnService
+from service.board import Board
 from core.inject import inject
 
 @inject('_board', Board)
