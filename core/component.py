@@ -22,6 +22,7 @@ class Component(ABC):
 
     def handleChanges(self):
         self.onChanges()
+        self.template = self.setTemplate()
         self.show()
 
     def onChanges(self):

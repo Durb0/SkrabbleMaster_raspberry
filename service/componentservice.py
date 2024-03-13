@@ -31,5 +31,8 @@ class ComponentService:
         return self._component
 
     def reload(self):
-        self._component.show()
-        self.component_changed.emit()
+        #reload the current component
+        if self._component:
+            self._component.change.emit()
+        else:
+            print('No component found')
