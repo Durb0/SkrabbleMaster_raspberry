@@ -22,12 +22,14 @@ class AnalyseComponent(Component):
         body = self.turnTemplate(cursor, turn)
         return head + body
 
-    def turnTemplate(self, y_start, turn):
+    def turnTemplate(self, cursor, turn):
         template = []
-        template.append("text?value={}. {};color=0xFFFF;size=4;x_start=0;y_start={};".format(self._turn.selected_index+1, turn.entry, y_start))
-        y_start += 20
-        for index, solution in enumerate(turn.solutions):
-            template.append("text?value={} - {};color=0xFFFF;size=1;x_start=0;y_start={};".format(solution.score, solution.word, y_start + 10*(index+1)))
+        template.append("text?value={}. {};color=0xFFFF;size=4;x_start=0;y_start={};".format(self._turn.selected_index+1, turn.entry, cursor))
+        cursor += 40
+        for i in range(4):
+            solution = turn.solutions[i]
+            template.append("text?value=-- {} --\n {};color=0xFFFF;size=2;x_start=0;y_start={};".format(solution.score, ", ".join(solution.words[:4]), cursor + 50*i))
+            i += 1
         return template
 
     def handleActionButtonOnPress(self, e):

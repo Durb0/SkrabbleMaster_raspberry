@@ -3,6 +3,7 @@ from .validation import ValidationComponent, Choice
 from service.componentservice import ComponentService
 from service.board import Board
 from service.turn import TurnService, MAX_TURNS
+from service.anagram import AnagramService
 from core.inject import inject
 from models.turn import Turn
 from components.utils import header
@@ -11,6 +12,7 @@ from config import LONG_PRESS_TIME
 
 @inject('_routing', ComponentService)
 @inject('_turn', TurnService)
+@inject('_anagram', AnagramService)
 class PartyComponent(Component):
 
     def onInit(self):
@@ -63,7 +65,9 @@ class PartyComponent(Component):
 
     def handleChoose(self, choice, text):
         if choice == "yes":
-            self._turn.addTurn(Turn(text,[]))
+            self._routing.setComponent(ValidationComponent('', 'Patientez...', Choice('', lambda : None), Choice('', lambda : None)))
+            turn = self._anagram.find_anagrams(text.lower())
+            self._turn.addTurn(turn)
         self._routing.setComponent(PartyComponent())
 
     def handleRemove(self, choice):
