@@ -3,3 +3,5 @@ def inject(name, cls):
         setattr(target, name, cls.get_instance())
         return target
     return wrapper
+
+

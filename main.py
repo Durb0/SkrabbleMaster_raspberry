@@ -21,9 +21,9 @@ class SkrabbleMaster:
     def handleModeButtonOnPress(self, e):
         if e >= LONG_PRESS_TIME:
             self._routing.setComponent(
-                ValidationComponent('Do you want to clean the cache?', '',
-                                    Choice('Yes', lambda : self.clean(True)),
-                                    Choice('No', lambda : self.clean(False))
+                ValidationComponent('Confirmer suppression cache?', '',
+                                    Choice('Oui', lambda : self.clean(True)),
+                                    Choice('Non', lambda : self.clean(False))
                 )
             )
         else:

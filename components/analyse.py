@@ -11,25 +11,28 @@ class AnalyseComponent(Component):
     def onInit(self):
         light = self._board.mode_button.setLight(False)
         assert not light
-        self.turns = self._turn.getTurns()
-        self.index = 0
 
     def setTemplate(self):
         cursor = 0
         head, cursor = header("Analyse", cursor)
+        turn = self._turn.selected_turn
 
-        body = ["text?value={};color=0xFFFF;size=2;x_start=0;y_start={};".format(turn.entry, 20 + 20*index) for index, turn in enumerate(self.turns)]
-
-        # fusion head and body
+        if not turn:
+            return head + ["text?value=No turn found;color=0xFFFF;size=2;x_start=0;y_start={};".format(cursor)]
+        body = self.turnTemplate(cursor, turn)
         return head + body
 
-    @property
-    def selected_turn(self):
-        return self.turns[self.index]
+    def turnTemplate(self, y_start, turn):
+        template = []
+        template.append("text?value={}. {};color=0xFFFF;size=4;x_start=0;y_start={};".format(self._turn.selected_index+1, turn.entry, y_start))
+        y_start += 20
+        for index, solution in enumerate(turn.solutions):
+            template.append("text?value={} - {};color=0xFFFF;size=1;x_start=0;y_start={};".format(solution.score, solution.word, y_start + 10*(index+1)))
+        return template
 
     def handleActionButtonOnPress(self, e):
         if e >= LONG_PRESS_TIME:
-            self.index = (self.index - 1) % len(self.turns)
+            self._turn.previousIndex()
         else:
-            self.index = (self.index + 1) % len(self.turns)
+            self._turn.nextIndex()
         self.change.emit()

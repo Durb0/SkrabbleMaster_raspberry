@@ -2,7 +2,7 @@ from core.component import Component
 from .validation import ValidationComponent, Choice
 from service.componentservice import ComponentService
 from service.board import Board
-from service.turn import TurnService
+from service.turn import TurnService, MAX_TURNS
 from core.inject import inject
 from models.turn import Turn
 from components.utils import header
@@ -20,15 +20,21 @@ class PartyComponent(Component):
 
     def setTemplate(self):
         cursor = 0
-        head, cursor = header("Party", cursor)
-        body = self.turnTemplate(cursor)
+        head, cursor = header("Partie", cursor)
+        body = self.turnsTemplate(cursor)
 
         return head + body
 
-    def turnTemplate(self, y_start=20):
+    def turnsTemplate(self, y_start=20):
         template = []
-        for index, turn in enumerate(self._turn.getTurns()):
-            template.append("text?value={};color=0xFFFF;size=1;x_start=0;y_start={};".format("{}. {}".format(index+1,turn.entry), y_start + 10*index))
+        i = 0
+        for index, turn in enumerate(self._turn.turns):
+            # get only the last 6 turns
+            if len(self._turn.turns) > MAX_TURNS:
+                if index < len(self._turn.turns) - MAX_TURNS:
+                    continue
+            template.append("text?value={}. {};color=0xFFFF;size=3;x_start=0;y_start={};".format(index+1, turn.entry, y_start + 30*i))
+            i += 1
         return template
 
     def randomWord(self):
@@ -40,21 +46,27 @@ class PartyComponent(Component):
 
     def handleActionButtonOnPress(self, duration):
         if duration >= LONG_PRESS_TIME:
-            self._turn.removeLastTurn()
-            self.change.emit()
+            self._routing.setComponent(ValidationComponent('Annuler le dernier tour?', "",
+                            Choice('Oui', lambda : self.handleRemove(True)),
+                            Choice('Non', lambda : self.handleRemove(False))
+            ))
         else:
             print('[TODO] Take a photo')
             print("[TODO] Analyse photo to get text")
             text = self.randomWord()
             self._routing.setComponent(
-                ValidationComponent('Do you valid the text?', text,
-                            Choice('Yes', lambda : self.handleChoose('yes', text)),
-                            Choice('No', lambda : self.handleChoose('no', text))
+                ValidationComponent('Validez vous ce chevalet?', text,
+                            Choice('Oui', lambda : self.handleChoose('yes', text)),
+                            Choice('Non', lambda : self.handleChoose('no', text))
                 )
             )
 
     def handleChoose(self, choice, text):
         if choice == "yes":
             self._turn.addTurn(Turn(text,[]))
-            self.change.emit()
+        self._routing.setComponent(PartyComponent())
+
+    def handleRemove(self, choice):
+        if choice:
+            self._turn.removeLastTurn()
         self._routing.setComponent(PartyComponent())
