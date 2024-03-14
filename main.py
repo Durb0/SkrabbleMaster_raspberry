@@ -6,6 +6,7 @@ from service.turn import TurnService
 from service.board import Board
 from core.inject import inject
 from config import LONG_PRESS_TIME
+import time
 
 @inject('_board', Board)
 @inject('_routing', ComponentService)
