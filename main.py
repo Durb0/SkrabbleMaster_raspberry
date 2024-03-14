@@ -45,5 +45,5 @@ class SkrabbleMaster:
 
 if __name__ == '__main__':
     sm = SkrabbleMaster()
-    input('Press enter to exit')
-    print('Exiting')
+    while True:
+        time.sleep(1) # keep the main thread running
